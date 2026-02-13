@@ -1,0 +1,21 @@
+<h2>Lista de Películas</h2>
+<table>
+  <tr>
+    <th>Título</th>
+    <th>Director</th>
+    <th>Género</th>
+    <th>Año</th>
+    <th>Acciones</th>
+  </tr>
+  <tr *ngFor="let p of peliculas">
+    <td>{{p.titulo}}</td>
+    <td>{{p.director}}</td>
+    <td>{{p.genero}}</td>
+    <td>{{p.anio}}</td>
+    <td>
+      <button>Ver</button>
+      <button>Editar</button>
+      <button (click)="eliminar(p.id!)">Eliminar</button>
+    </td>
+  </tr>
+</table>
