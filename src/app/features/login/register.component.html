@@ -1,9 +1,9 @@
 <div class="container">
   <div class="icon">🎬</div>
   <h1>CineControl Pro</h1>
-  <div class="subtitle">Acceso Administrativo</div>
+  <div class="subtitle">Crear cuenta administrativa</div>
 
-  <form (ngSubmit)="submit()">
+  <form (ngSubmit)="register()">
     <input 
       type="text"
       name="username"
@@ -18,15 +18,19 @@
       placeholder="Contraseña"
       required>
 
-    <button type="submit">Ingresar</button>
+    <button type="submit">Registrarse</button>
   </form>
 
-  <p *ngIf="error" style="color:#ff6b6b; margin-top:10px;">
+  <p *ngIf="error" class="error">
     {{ error }}
   </p>
 
+  <p *ngIf="success" class="success">
+    {{ success }}
+  </p>
+
   <p style="margin-top:15px; font-size:13px;">
-    ¿No tienes cuenta?
-    <a routerLink="/register">Regístrate</a>
+    ¿Ya tienes cuenta?
+    <a routerLink="/login">Inicia sesión</a>
   </p>
 </div>

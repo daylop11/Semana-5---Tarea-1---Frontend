@@ -25,7 +25,6 @@ export class EditComponent implements OnInit {
   actualizarPelicula(p: Pelicula) {
     console.log('Actualizar película:', p);
 
-    // Aquí podrías llamar a tu servicio para actualizarla:
-    // this.peliculasService.actualizarPelicula(p).subscribe(...)
+    
   }
 }

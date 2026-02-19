@@ -1,62 +1,53 @@
-<div class="container">
+<div class="navbar">
+  <h1>🎬 MovieApp</h1>
+  <button class="logout-btn" (click)="logout()">Cerrar sesión</button>
+</div>
 
-<h2>🎬 CineControl Pro</h2>
+<div class="card">
+  <h2>{{ modoEdicion ? 'Editar Película' : 'Agregar Película' }}</h2>
 
-  <form (ngSubmit)="guardar()">
+  <input
+    type="text"
+    placeholder="Título"
+    [(ngModel)]="peliculaActual.titulo"
+  />
 
-    <input type="text" placeholder="Título"
-           [(ngModel)]="peliculaActual.titulo"
-           name="titulo" required>
+  <input
+    type="text"
+    placeholder="Director"
+    [(ngModel)]="peliculaActual.director"
+  />
 
-    <input type="text" placeholder="Director"
-           [(ngModel)]="peliculaActual.director"
-           name="director" required>
+  <input
+    type="number"
+    placeholder="Año"
+    [(ngModel)]="peliculaActual.anio"
+  />
 
-    <input type="number" placeholder="Anio"
-           [(ngModel)]="peliculaActual.anio"
-           name="anio" required>
+  <button class="primary" (click)="guardar()">
+    {{ modoEdicion ? 'Actualizar' : 'Guardar' }}
+  </button>
+</div>
 
-    <input type="text" placeholder="Género"
-           [(ngModel)]="peliculaActual.genero"
-           name="genero" required>
+<div class="card">
+  <h2>Lista de Películas</h2>
 
-    <input type="number" step="0.1" placeholder="Calificación"
-           [(ngModel)]="peliculaActual.calificacion"
-           name="calificacion" required>
+  <div class="movie-list">
+    <div class="movie-item" *ngFor="let pelicula of peliculas">
+      <div>
+        <strong>{{ pelicula.titulo }}</strong><br />
+        {{ pelicula.director }} - {{ pelicula.anio }}
+      </div>
 
-    <button type="submit">
-      {{ modoEdicion ? 'Actualizar' : 'Agregar' }}
-    </button>
+      <div class="actions">
+        <button class="edit-btn" (click)="editar(pelicula)">
+          Editar
+        </button>
 
-  </form>
-
-  <hr>
-
-  <table>
-    <thead>
-      <tr>
-        <th>Título</th>
-        <th>Director</th>
-        <th>Anio</th>
-        <th>Género</th>
-        <th>Calificación</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <tr *ngFor="let p of peliculas">
-        <td>{{ p.titulo }}</td>
-        <td>{{ p.director }}</td>
-        <td>{{ p.anio }}</td>
-        <td>{{ p.genero }}</td>
-        <td>{{ p.calificacion }}</td>
-        <td>
-            <button (click)="editar(p)">✏️ Editar</button>
-            <button (click)="eliminar(p.id)">🗑 Eliminar</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
+        <button class="delete-btn" (click)="eliminar(pelicula.id)">
+          Eliminar
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

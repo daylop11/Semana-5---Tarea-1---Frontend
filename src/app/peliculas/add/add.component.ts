@@ -16,7 +16,5 @@ export class AddComponent {
   crearPelicula(p: Pelicula) {
     console.log('Creando:', p);
 
-    // Aquí puedes añadir la lógica para guardar la película, por ejemplo:
-    // this.peliculasService.crearPelicula(p).subscribe(...)
   }
 }

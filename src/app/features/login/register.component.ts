@@ -5,10 +5,10 @@ import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-register',
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule],
-  templateUrl: './login.component.html',
+  templateUrl: './register.component.html',
   styles: [`
     :host {
       display: flex;
@@ -95,41 +95,58 @@ import { AuthService } from '../../core/services/auth.service';
       text-decoration: underline;
     }
 
+    .error {
+      color: #ff6b6b;
+      margin-top: 10px;
+      font-size: 13px;
+    }
+
+    .success {
+      color: #4cd964;
+      margin-top: 10px;
+      font-size: 13px;
+    }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
   `]
 })
-export class LoginComponent {
+export class RegisterComponent {
 
   username = '';
   password = '';
   error = '';
+  success = '';
 
   constructor(
-    private auth: AuthService,
+    private authService: AuthService,
     private router: Router
   ) {}
 
-  submit() {
+  register() {
 
     if (!this.username || !this.password) {
       this.error = 'Todos los campos son obligatorios';
       return;
     }
 
-    this.auth.login({
+    this.authService.register({
       username: this.username,
       password: this.password
     }).subscribe({
-      next: (res: any) => {
-        localStorage.setItem('token', res.token);
-        localStorage.setItem('username', res.username);
-        this.router.navigate(['/home']);
+      next: () => {
+        this.success = 'Usuario registrado correctamente';
+        this.error = '';
+
+        setTimeout(() => {
+          this.router.navigate(['/login']);
+        }, 1500);
       },
       error: () => {
-        this.error = 'Credenciales incorrectas';
+        this.error = 'Error al registrar usuario';
+        this.success = '';
       }
     });
   }

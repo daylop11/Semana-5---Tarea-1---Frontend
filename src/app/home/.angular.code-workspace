@@ -1,0 +1,22 @@
+{
+	"folders": [
+		{
+			"path": "../../../.angular"
+		},
+		{
+			"path": "../../../.git"
+		},
+		{
+			"path": "../../../.vscode"
+		},
+		{
+			"path": "../../../node_modules"
+		},
+		{
+			"path": "../../../public"
+		},
+		{
+			"path": "../.."
+		}
+	]
+}

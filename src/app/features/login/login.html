@@ -1,1 +1,15 @@
-<p>login works!</p>
+<h2>{{ isRegister ? 'Registro' : 'Login' }}</h2>
+
+<input type="text" placeholder="Usuario" [(ngModel)]="username">
+<br>
+<input type="password" placeholder="Contraseña" [(ngModel)]="password">
+<br>
+<button (click)="submit()">
+  {{ isRegister ? 'Registrarse' : 'Ingresar' }}
+</button>
+
+<p style="color:red">{{error}}</p>
+
+<button (click)="isRegister = !isRegister">
+  {{ isRegister ? 'Ir a Login' : 'Crear cuenta' }}
+</button>
