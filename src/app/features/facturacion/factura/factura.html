@@ -1,0 +1,39 @@
+<div class="factura-container">
+  <div class="factura-card">
+    <h2 class="titulo">Factura</h2>
+
+    <div class="info">
+      <div>
+        <span class="label">Cliente</span>
+        <p>{{ factura.cliente }}</p>
+      </div>
+      <div>
+        <span class="label">Fecha</span>
+        <p>{{ factura.fecha | date }}</p>
+      </div>
+    </div>
+
+    <table class="tabla-productos">
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Cantidad</th>
+          <th>Precio</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of factura.productos">
+          <td>{{ p.nombre }}</td>
+          <td>{{ p.cantidad }}</td>
+          <td>${{ p.precio }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="acciones">
+      <button (click)="generarReporte()" class="btn-descargar">
+        Descargar PDF
+      </button>
+    </div>
+  </div>
+</div>

@@ -4,28 +4,49 @@
 </div>
 
 <div class="card">
-  <h2>{{ modoEdicion ? 'Editar Película' : 'Agregar Película' }}</h2>
+  <h2>
+    @if (modoEdicion()) {
+      Editar Película
+    } @else {
+      Agregar Película
+    }
+  </h2>
 
-  <input
-    type="text"
-    placeholder="Título"
-    [(ngModel)]="peliculaActual.titulo"
-  />
+<input
+  type="text"
+  placeholder="Título"
+  [ngModel]="peliculaActual().titulo"
+  (ngModelChange)="peliculaActual.set({ 
+    ...peliculaActual(), 
+    titulo: $event 
+  })"
+/>
 
-  <input
-    type="text"
-    placeholder="Director"
-    [(ngModel)]="peliculaActual.director"
-  />
+<input
+  type="text"
+  placeholder="Director"
+  [ngModel]="peliculaActual().director"
+  (ngModelChange)="peliculaActual.set({ 
+    ...peliculaActual(), 
+    director: $event 
+  })"
+/>
 
-  <input
-    type="number"
-    placeholder="Año"
-    [(ngModel)]="peliculaActual.anio"
-  />
-
+<input
+  type="number"
+  placeholder="Año"
+  [ngModel]="peliculaActual().anio"
+  (ngModelChange)="peliculaActual.set({ 
+    ...peliculaActual(), 
+    anio: +$event 
+  })"
+/>
   <button class="primary" (click)="guardar()">
-    {{ modoEdicion ? 'Actualizar' : 'Guardar' }}
+    @if (modoEdicion()) {
+      Actualizar
+    } @else {
+      Guardar
+    }
   </button>
 </div>
 
@@ -33,21 +54,23 @@
   <h2>Lista de Películas</h2>
 
   <div class="movie-list">
-    <div class="movie-item" *ngFor="let pelicula of peliculas">
-      <div>
-        <strong>{{ pelicula.titulo }}</strong><br />
-        {{ pelicula.director }} - {{ pelicula.anio }}
-      </div>
+    @for (pelicula of peliculas(); track pelicula.id) {
+      <div class="movie-item">
+        <div>
+          <strong>{{ pelicula.titulo }}</strong><br />
+          {{ pelicula.director }} - {{ pelicula.anio }}
+        </div>
 
-      <div class="actions">
-        <button class="edit-btn" (click)="editar(pelicula)">
-          Editar
-        </button>
+        <div class="actions">
+          <button class="edit-btn" (click)="editar(pelicula)">
+            Editar
+          </button>
 
-        <button class="delete-btn" (click)="eliminar(pelicula.id)">
-          Eliminar
-        </button>
+          <button class="delete-btn" (click)="eliminar(pelicula.id)">
+            Eliminar
+          </button>
+        </div>
       </div>
-    </div>
+    }
   </div>
 </div>

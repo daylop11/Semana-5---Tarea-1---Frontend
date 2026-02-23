@@ -7,5 +7,14 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'home', component: HomeComponent },
+
+  // NUEVA RUTA FACTURA
+  {
+    path: 'factura',
+    loadComponent: () =>
+      import('./features/facturacion/factura/factura')
+        .then(m => m.FacturaComponent)
+  },
+
   { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];

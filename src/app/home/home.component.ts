@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../core/services/auth.service';
 import { PeliculasService } from '../core/services/peliculas.service';
+import { signal } from '@angular/core';
 
 @Component({
   selector: 'app-home',
@@ -107,16 +108,16 @@ import { PeliculasService } from '../core/services/peliculas.service';
 })
 export class HomeComponent implements OnInit {
 
-  peliculas: any[] = [];
+  peliculas = signal<any[]>([]);
 
-  peliculaActual: any = {
+  peliculaActual = signal<any>({
     id: 0,
     titulo: '',
     director: '',
     anio: 0
-  };
+  });
 
-  modoEdicion = false;
+  modoEdicion = signal(false);
 
   constructor(
     private auth: AuthService,
@@ -130,20 +131,24 @@ export class HomeComponent implements OnInit {
 
   cargarPeliculas() {
     this.peliculasService.getPeliculas()
-      .subscribe(data => this.peliculas = data);
+      .subscribe(data => {
+        this.peliculas.set(data);
+      });
   }
 
   guardar() {
-    if (this.modoEdicion) {
+    const pelicula = this.peliculaActual();
+
+    if (this.modoEdicion()) {
       this.peliculasService
-        .actualizarPelicula(this.peliculaActual.id, this.peliculaActual)
+        .actualizarPelicula(pelicula.id, pelicula)
         .subscribe(() => {
           this.cargarPeliculas();
           this.resetFormulario();
         });
     } else {
       this.peliculasService
-        .agregarPelicula(this.peliculaActual)
+        .agregarPelicula(pelicula)
         .subscribe(() => {
           this.cargarPeliculas();
           this.resetFormulario();
@@ -152,8 +157,8 @@ export class HomeComponent implements OnInit {
   }
 
   editar(pelicula: any) {
-    this.peliculaActual = { ...pelicula };
-    this.modoEdicion = true;
+    this.peliculaActual.set({ ...pelicula });
+    this.modoEdicion.set(true);
   }
 
   eliminar(id: number) {
@@ -165,13 +170,14 @@ export class HomeComponent implements OnInit {
   }
 
   resetFormulario() {
-    this.peliculaActual = {
+    this.peliculaActual.set({
       id: 0,
       titulo: '',
       director: '',
       anio: 0
-    };
-    this.modoEdicion = false;
+    });
+
+    this.modoEdicion.set(false);
   }
 
   logout() {

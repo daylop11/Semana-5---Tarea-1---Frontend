@@ -6,11 +6,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class AuthService {
 
-  private apiUrl = 'https://localhost:5001/api/auth';
+  private apiUrl = 'https://localhost:57188/api/auth';
 
   constructor(private http: HttpClient) {}
 
   login(data: any) {
+
     return this.http.post<any>(`${this.apiUrl}/login`, data);
   }
 
